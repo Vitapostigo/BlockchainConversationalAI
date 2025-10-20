@@ -31,21 +31,29 @@ Para generarlas, usar: https://github.com/bitcoin/bitcoin/blob/master/share/rpca
 🔹 Endpoints disponibles
 
 El servidor expone endpoints MCP que pueden ser consumidos por herramientas o sistemas automatizados.
-Endpoints de nodo Bitcoin
-Endpoint	Método	Descripción
+
 /BitcoinGetBlockchainInfo	GET	Información general del blockchain (altura, dificultad, headers, etc.).
+
 /BitcoinGetP2PNodeInfo	GET	Estado del nodo Bitcoin, versión, conexiones, protocolos.
+
 /BitcoinGetBlockHashByHeight	POST	Hash de un bloque por altura (height).
+
 /BitcoinGetMempoolInfo	GET	Información sobre la mempool activa de transacciones.
+
 /BitcoinGetChainTxStats	POST	Estadísticas de transacciones en un rango de bloques (nblocks, blockhash).
+
 /BitcoinEstimateSmartFee	GET	Estimación de fee por KB para confirmación rápida.
+
 /BitcoinGetBlock	POST	Información de un bloque específico y sus transacciones (blockhash).
+
 /BitcoinGetTransaction	POST	Información completa de una transacción (txid).
-Endpoints de nodo Fulcrum
-Endpoint	Método	Descripción
+
 /BitcoinGetBalance	POST	Devuelve el balance de una dirección Bitcoin (address).
+
 /BitcoinGetAddressFirstUse	POST	Primera transacción asociada a una dirección (address).
+
 /BitcoinGetHistory	POST	Historial completo de transacciones de una dirección (address).
+
 /BitcoinGetBlockFromTransaction	POST	Altura del bloque que contiene una transacción (txid).
 
 Para construir el contenedor:
