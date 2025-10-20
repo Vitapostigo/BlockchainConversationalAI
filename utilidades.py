@@ -9,8 +9,8 @@ import os
 def getMainnetClient():
     user = os.getenv("MAINNET_USER")
     password = os.getenv("MAINNET_PASS")
-    host = os.getenv("MAINNET_HOST", "localhost")
-    port = os.getenv("MAINNET_PORT", "8332")
+    host = "bitcoin_mainnet"
+    port = "8332"
     return f"http://{user}:{password}@{host}:{port}"
 ########################################CREDENCIALES NODO########################################
 #######################################CREDENCIALES FULCRUM######################################
