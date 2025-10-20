@@ -7,13 +7,13 @@ from bitcoinrpc.authproxy import AuthServiceProxy
 # a tools esta en utilidades.descripcionGetInfo()
 def infoBlockchain():
     try:                        return AuthServiceProxy(getMainnetClient()).getblockchaininfo()
-    except Exception as e:      return "Error de conexión"
+    except Exception as e:      return f"Error de conexión: {str(e)}"
 ########################################INFORMACION DE LA BLOCKCHAIN########################################
 ###########################################INFORMACION DE LA RED############################################
 # Versión del nodo, conexiones, protocolos.
 def infoRed():
     try:                        return AuthServiceProxy(getMainnetClient()).getnetworkinfo()
-    except Exception as e:      return "Error de conexión"
+    except Exception as e:      return f"Error de conexión: {str(e)}"
 ###########################################INFORMACION DE LA RED############################################
 ###########################################INFORMACION DE BLOQUE############################################
 # Obtiene el hash de un bloque dado su número.                                                              #REQUIERE PARAMETRO
@@ -72,7 +72,7 @@ def estimatesmartfee():
 # Info general de la mempool
 def bloqueInfo(blockhash: str):
     try:                        return AuthServiceProxy(getMainnetClient()).getblock(blockhash,1)
-    except Exception as e:      return "Error de conexión"
+    except Exception as e:      return return f"Error de conexión: {str(e)}"
 #########################################INFORMACION DE UN BLOQUE###########################################
 ##########################################INFORMACION DE UNA TX#############################################
 #########AUXILIAR PARA AYUDAR A TX, REUTLIZANDO CODIGO DE: https://github.com/Vitapostigo/BotBTCTelegram/blob/main/Utiles/funciones.py#########
