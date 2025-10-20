@@ -9,7 +9,7 @@ import os
 def getMainnetClient():
     user = os.getenv("MAINNET_USER")
     password = os.getenv("MAINNET_PASS")
-    host = "127.0.0.1"
+    host = localhost
     port = "8332"
     address = f"http://{user}:{password}@{host}:{port}"
     print(address)
