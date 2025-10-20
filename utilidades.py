@@ -11,7 +11,9 @@ def getMainnetClient():
     password = os.getenv("MAINNET_PASS")
     host = "127.0.0.1"
     port = "8332"
-    return f"http://{user}:{password}@{host}:{port}"
+    address = f"http://{user}:{password}@{host}:{port}"
+    print(address)
+    return address
 ########################################CREDENCIALES NODO########################################
 #######################################CREDENCIALES FULCRUM######################################
 def getFulcrumIp():
