@@ -3,7 +3,7 @@
 ![Blockchain](https://img.shields.io/badge/Blockchain-Bitcoin-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-Python-green) ![Docker](https://img.shields.io/badge/Docker-Containers-blue)
 
 Este proyecto es un **servidor MCP (Multi-Tool Communication Protocol) basado en FastAPI** que expone endpoints para interactuar con la **blockchain de Bitcoin** y con un nodo Fulcrum. Está diseñado para ser utilizado como backend para herramientas y sistemas que necesiten consultar información sobre transacciones, bloques, mempool y balances de manera estructurada y segura.
-
+Para consultas, se puede importar en: https://mcp.vitadeb.com/docs. Actualmente sin contraseña.
 ---
 
 ## 📌 Objetivo del proyecto
