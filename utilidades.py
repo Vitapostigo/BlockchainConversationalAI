@@ -17,7 +17,7 @@ def getMainnetClient():
 ########################################CREDENCIALES NODO########################################
 #######################################CREDENCIALES FULCRUM######################################
 def getFulcrumIp():
-    return "localhost"
+    return "fulcrum_mainnet"
 def getFulcrumPort():
     return 50001
 #######################################CREDENCIALES FULCRUM######################################
