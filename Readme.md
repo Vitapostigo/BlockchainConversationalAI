@@ -118,7 +118,4 @@ El servidor expone endpoints MCP que pueden ser consumidos por herramientas o si
 
 Se usará como parte de un stack que levantará varios proyecto creando una red para las comunicaciones. Por tanto el --network host es temporal.
 
-El resultado está expuesto en:
-https://mcp.vitadeb.com/docs#/
-
 Para otros ver más de mis proyectos visita: https://vitadeb.com/
