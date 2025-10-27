@@ -28,20 +28,35 @@ def precio_bitcoin():
     data = response.json()
     return str(data['bitcoin']['usd'])
 #################################################################################################
-async def consultaFulcrum(host, port, content):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((host, port))
-    sock.sendall(json.dumps(content).encode('utf-8') + b'\n')
-    await sleep(0.5)
-    sock.shutdown(socket.SHUT_WR)
-    res = ""
-    while True:
-        data = sock.recv(65536)
-        if not data:
-            break
-        res += data.decode()
-    sock.close()
-    return res
+async def consultaFulcrum(host, port, content, retries=2, delay=1):
+    """Consulta un nodo Fulcrum de forma segura con retry y espera dinámica."""
+    message = json.dumps(content).encode('utf-8') + b'\n'
+
+    for attempt in range(retries):
+        try:
+            reader, writer = await asyncio.open_connection(host, port)
+            writer.write(message)
+            await writer.drain()
+
+            try:
+                data = await asyncio.wait_for(reader.read(65536), timeout=5)
+            except asyncio.TimeoutError:
+                data = b''
+
+            writer.close()
+            await writer.wait_closed()
+
+            if data:
+                return data.decode()
+
+            print(f"[Intento {attempt+1}] Respuesta vacía, reintentando...")
+            await asyncio.sleep(delay)
+
+        except Exception as e:
+            print(f"[Intento {attempt+1}] Error: {e}")
+            await asyncio.sleep(delay)
+
+    return None
 #################################################################################################
 def addr2scripthash(address):
     script = Output(0, address).script
