@@ -1,4 +1,4 @@
-# Blockchain Conversational AI - MCP Endpoint Server
+# Bitcoin Self Hosted MCP Endpoint Server
 
 ![Blockchain](https://img.shields.io/badge/Blockchain-Bitcoin-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-Python-green) ![Docker](https://img.shields.io/badge/Docker-Containers-blue)
 
