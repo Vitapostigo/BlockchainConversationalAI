@@ -18,15 +18,75 @@ El servidor actúa como un **expositor de endpoints MCP**:
 ## ⚙️ Configuración de credenciales
 
 Todas las credenciales sensibles deben almacenarse en un archivo `.env` **fuera del repositorio**:
-
-,env
-# Nodo Bitcoin RPC
-MAINNET_USER=mainnet
-MAINNET_PASS=TU_PASSWORD
-MAINNET_HOST=localhost
-MAINNET_PORT=8332
+Para consultar la estructura se proporciona .env.example.
 
 Para generarlas, usar: https://github.com/bitcoin/bitcoin/blob/master/share/rpcauth/rpcauth.py
+
+---
+
+## 🐳 Despliegue completo con Docker Compose
+
+El entorno completo puede levantarse fácilmente con **Docker Compose**, lo que permite ejecutar:
+
+- Un nodo **Bitcoin Core** (Mainnet)
+- Un nodo **Fulcrum**
+- El servidor **MCP** basado en FastAPI (contenedor `mcpserver`)
+
+Este archivo `docker-compose.yml` **está incluido en el repositorio** y está diseñado para trabajar con una red Docker compartida (`mcp_network`).
+
+---
+
+### 📦 Estructura del proyecto
+
+.
+├── Dockerfile
+├── docker-compose.yml
+├── .env.example
+├── README.md
+├── requirements.txt
+└── app/
+├── mcpServer.py
+└── ...
+
+
+### ⚙️ Configuración previa
+
+1. **Crear la red compartida** (solo la primera vez):
+
+   ```bash
+   docker network create mcp_network
+
+
+🚀 Levantar el entorno
+Para construir y ejecutar todos los servicios:
+
+Descargar el Dockerfile.
+Construir el contenedor con: docker build --no-cache -t mcpserver-app .
+
+
+🧩 Servicios incluidos
+🪙 Bitcoin Mainnet
+Ejecuta un nodo completo de Bitcoin con txindex habilitado, permitiendo consultas RPC desde los demás servicios.
+
+⚡ Fulcrum
+Nodo indexador de alto rendimiento compatible con Electrum, conectado internamente al nodo Bitcoin.
+
+🤖 MCP Server
+Servidor FastAPI que expone endpoints para interactuar con la blockchain a través de Bitcoin Core y Fulcrum.
+
+🌐 Acceso a la API
+Una vez levantado el stack y los nodos estén sincronizados, se puede acceder a la documentación interactiva de la API:
+
+👉 http://localhost:13333/docs
+
+🧠 Notas adicionales
+Los volúmenes locales definidos en docker-compose.yml son rutas genéricas (./data/...), puedes cambiarlas según tu entorno.
+
+La red mcp_network permite comunicación interna entre contenedores sin exponer puertos RPC públicamente.
+
+El servidor MCP es accesible solo a través del puerto 13333.
+
+El modo --reload está pensado para desarrollo. En producción puede eliminarse o cambiarse a --workers N.
 
 🔹 Endpoints disponibles
 
@@ -56,10 +116,9 @@ El servidor expone endpoints MCP que pueden ser consumidos por herramientas o si
 
 /BitcoinGetBlockFromTransaction	POST	Altura del bloque que contiene una transacción (txid).
 
-Para construir el contenedor:
-docker build --no-cache -t mcpserver-app .
-
-Para lanzarlo:
-docker run -d --rm --name mcpserver --env-file .env --network host mcpserver-app
-
 Se usará como parte de un stack que levantará varios proyecto creando una red para las comunicaciones. Por tanto el --network host es temporal.
+
+El resultado está expuesto en:
+https://mcp.vitadeb.com/docs#/
+
+Para otros ver más de mis proyectos visita: https://vitadeb.com/

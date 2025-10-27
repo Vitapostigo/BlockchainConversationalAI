@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+  bitcoin_mainnet:
+    image: bitcoin/bitcoin
+    container_name: bitcoin_mainnet
+    command:
+      -txindex=1
+      -rpcbind=0.0.0.0
+      -rpcallowip=0.0.0.0/0
+      -zmqpubhashblock=tcp://0.0.0.0:8433
+      -rpcauth=${MAINNET_USER}:${MAINNET_RPCAUTH}
+      -dbcache=16384
+      -rpcthreads=16
+      -rpcworkqueue=128
+      -par=8
+    volumes:
+      - ./data/bitcoin:/home/bitcoin/.bitcoin
+    networks:
+      - mcp_network
+
+  fulcrum_mainnet:
+    image: cculianu/fulcrum
+    container_name: fulcrum_mainnet
+    command: >
+      Fulcrum
+      -u ${MAINNET_USER}
+      -p ${MAINNET_PASS}
+      -b bitcoin_mainnet:8332
+      --db_mem=16384
+      --tcp 0.0.0.0:50001
+    volumes:
+      - ./data/fulcrum:/data
+    depends_on:
+      - bitcoin_mainnet
+    networks:
+      - mcp_network
+
+  mcpserver:
+    image: mcpserver-app
+    container_name: mcpserver
+    environment:
+      - MAINNET_USER=${MAINNET_USER}
+      - MAINNET_PASS=${MAINNET_PASS}
+      - MAINNET_HOST=bitcoin_mainnet
+      - MAINNET_PORT=8332
+    depends_on:
+      - bitcoin_mainnet
+      - fulcrum_mainnet
+    networks:
+      - mcp_network
+
+networks:
+  mcp_network:
+    external: true
